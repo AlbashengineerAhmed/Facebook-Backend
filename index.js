@@ -9,15 +9,12 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(
-  fileUpload({
-    useTempFiles: true,
-  })
-);
-//routes
+app.use(fileUpload()); // Removed useTempFiles option
+
+// Routes
 readdirSync("./routes").map((r) => app.use("/", require("./routes/" + r)));
 
-//database
+// Database
 mongoose
   .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
